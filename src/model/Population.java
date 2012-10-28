@@ -14,7 +14,6 @@ public class Population {
 	 * La liste des lofteurs
 	 */
 	private LinkedList<Neuneu> lofteurs;
-	private LinkedList<Neuneu> lofteursToRemove;
 
 	/**
 	 * Construit la population
@@ -23,8 +22,6 @@ public class Population {
 	 */
 	public Population(int p_numberNeuneu, Loft l){
 		lofteurs = new LinkedList<Neuneu>();
-		this.lofteursToRemove = new LinkedList<Neuneu>();
-
 
 	}
 
@@ -59,7 +56,7 @@ public class Population {
 	 * @param p_nigaud	Neuneu a virer
 	 */
 	public void removeNeuneu(Neuneu p_nigaud){
-		this.lofteursToRemove.add(p_nigaud);
+		this.lofteurs.remove(p_nigaud);
 	}
 
 	/**
@@ -74,18 +71,31 @@ public class Population {
 	 * Realise un tour
 	 */
 	public void Tour(){
-		for(Neuneu n : this.lofteurs){
-			if(n.getEnergie() == 1.0){
-				System.out.println("enegie critique");
-			}
-			n.cycleDeVie();
+		/*
+		 * Amélioration faite depuis le mail:
+		 * suppression du "neuneu to remove"
+		 * j'ai remis la fonction remove telle qu'elle était au départ
+		 * Je copie tous les neuneus
+		 * Puis ils font leur cycle de vie depuis cette liste.
+		 * 
+		 * J'ai notamment fait en sorte qu'on traite les différents neuneus dans un ordre aléatoire
+		 */
+
+		LinkedList<Neuneu> lofteursTreated = new LinkedList<Neuneu>();
+		lofteursTreated.addAll(this.lofteurs);
+		int i;
+		Neuneu neuneuInTreatment;
+
+		while(!lofteursTreated.isEmpty()){
+
+			i =  ( (int) Math.random() )*lofteursTreated.size();
+			neuneuInTreatment = lofteursTreated.get(i);	
+			lofteursTreated.remove(neuneuInTreatment);
+			
+			if(this.lofteurs.contains(neuneuInTreatment) )//Vérification que le neuneu existe toujours, il a pu se faire manger par un autre
+				neuneuInTreatment.cycleDeVie();
 		}
-		
-		// On fait le ménage, en différé pour éviter les problèmes d'appels simultanés à une même liste
-		for(Neuneu n2 : this.lofteursToRemove){
-			this.lofteurs.remove(n2);
-		}
-		this.lofteursToRemove = new LinkedList<Neuneu>();
+
 		Display.getInstance().actualiser();
 	}
 
