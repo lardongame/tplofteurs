@@ -38,9 +38,9 @@ public class Cannibal extends Neuneu {
 	 */
 	public boolean peutManger(TypeNourriture p_type) {
 		return (
-				p_type == TypeNourriture.Boisson &&
-				p_type == TypeNourriture.Legume &&
-				p_type == TypeNourriture.NeuneuMort &&
+				p_type == TypeNourriture.Boisson ||
+				p_type == TypeNourriture.Legume ||
+				p_type == TypeNourriture.NeuneuMort ||
 				p_type == TypeNourriture.Viande
 				);
 	}
@@ -78,4 +78,21 @@ public class Cannibal extends Neuneu {
 		}
 		return (Neuneu.ordonner_poids(poids, p_cases));
 	}
+	
+	/*/**
+	 * @brief	Effectue le déplacement du tour.
+	 * 		Récupère les cases accessibles, appel choixcase() et déplace si besoin.
+	 * @todo	Codage
+	 */
+	//@Override
+	/*protected void deplacerTour() {
+		ArrayList<Case> voisins = Monde.getMonde().getLoft().getVoisins(this.getCaseActuelle());
+		Population pop = Monde.getMonde().getPopulation();
+		for (int i=voisins.size()-1;i>=0;i--) {
+			Case destination = voisins.get(i);			
+		}
+		voisins = this.ordonnerCases(voisins);
+		if (voisins.size() > 0)
+			this.setCaseActuelle(voisins.get(0));
+	}*/
 }

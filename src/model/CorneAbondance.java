@@ -18,7 +18,7 @@ public class CorneAbondance {
 	 * Construit une corne d'abondance avec n objets de nourriture dedans
 	 * @param n	Nombre d'objets de ourriture à mettre dans la corne
 	 */
-	public CorneAbondance(int n){
+	public CorneAbondance(){
 		nourritureList = new LinkedList<Nourriture>();
 	}
 	
@@ -26,7 +26,7 @@ public class CorneAbondance {
 		Loft loft = Monde.getMonde().getLoft();
 		
 		for(int i = 0; i< n; i++){
-			nourritureList.add( new Nourriture(loft.randomCase(), Nourriture.getRandomType(),(int) Math.random() * 100)); // FIX ME
+			nourritureList.add( new Nourriture(loft.randomCase(), Nourriture.getRandomType(),(int) (Math.random() * 99) + 1)); // FIX ME
 		}
 	}
 	

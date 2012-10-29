@@ -13,7 +13,7 @@ import model.Nourriture;
 
 public class GMonde extends JPanel {
 
-	private final static int caseSize = 10;
+	public final static int caseSize = 10;
 
 	private final static Color erratiqueColor = Color.blue;
 	private final static Color voraceColor = Color.green;

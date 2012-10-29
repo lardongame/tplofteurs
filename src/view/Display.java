@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import model.Loft;
 import model.Monde;
 
 public class Display extends JFrame {
@@ -29,8 +30,9 @@ public class Display extends JFrame {
 
 			//Définit un titre pour votre fenêtre
 			this.setTitle("Neuneu Story");
-			//Définit une taille pour celle-ci ; ici, 400 px de large et 500 px de haut
-			this.setSize(800, 700);
+			
+			Loft l = m.getLoft();
+			this.setSize(l.getWidth()*GMonde.caseSize+16, l.getHeight()*GMonde.caseSize+38);
 			//Nous allons maintenant dire à notre objet de se positionner au centre
 			this.setLocationRelativeTo(null);
 			//Terminer le processus lorsqu'on clique sur "Fermer"

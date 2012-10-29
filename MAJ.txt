@@ -1,0 +1,24 @@
+MAJ du 39/10/12 11h30 (Yohann)
+
+Nourriture :
+la méthode peut manger, on faisait des conditions avec et plutôt que ou
+Du coup, il fallait que la nourriture soit à la fois de la viande et des légumes...
+ils ne mangeait pas beaucoup nos neuneus
+
+Neuneu :
+révision de la méthode manger par tour :
+- apparition d'un bug grâce à la révision de la méthode précédente (ils pouvaient manger),
+il y avait un appel concurrent de la liste. J'ai modifié la boucle for en une boucle while
+pour soler ce problème
+- ajout de l'énergie au neuneu après avoir manger
+
+Corne Abondance :
+- petite modification au niveau de l'initialisation, les casts de double vers int
+étaient dans un mauvais sens. Du coup toute la nourriture était en quantité 0.
+
+Population :
+J'ai revu la méthode tour pour être plus proche de du diagramme de classe
+
+
+Affichage:
+J'ai fait des réglages pour qu'on voit tout le loft

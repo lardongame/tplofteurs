@@ -56,7 +56,7 @@ public abstract class Neuneu extends Comestible {
 	 * 		Récupère les cases accessibles, appel choixcase() et déplace si besoin.
 	 * @todo	Codage
 	 */
-	private void deplacerTour() {
+	protected void deplacerTour() {
 		ArrayList<Case> voisins = Monde.getMonde().getLoft().getVoisins(this.getCaseActuelle());
 		Population pop = Monde.getMonde().getPopulation();
 		for (int i=voisins.size()-1;i>=0;i--) {
@@ -92,15 +92,33 @@ public abstract class Neuneu extends Comestible {
 	protected void mangerTour() {
 		CorneAbondance corne = Monde.getMonde().getCorneAbondance();
 		double qtte = this.getNourritureParTour();
-		for (Nourriture manger: corne.getNourritureList()) {
-			if (
-					this.getCaseActuelle() == manger.getCaseActuelle() &&
-					this.peutManger(manger)
-					) {
-				double coeff = Nourriture.getCoeff(manger.getType());
-				double energie = manger.manger(this.energieMax-this.energie, qtte);
-				qtte -= energie/coeff;
-			}
+		
+		int i = 0;
+		Nourriture manger;
+
+		while(i < corne.getNourritureList().size() ){
+			
+			manger = corne.getNourritureList().get(i);
+			
+			if (this.getCaseActuelle() == manger.getCaseActuelle()
+				&& this.peutManger(manger)	) {
+					double coeff = Nourriture.getCoeff(manger.getType());
+					double energie = manger.manger(this.energieMax-this.energie, qtte);
+					this.energie += energie;
+					qtte -= energie/coeff;
+					
+					if(manger.getQuantite() > 0.0) /*
+					*	On regarde si la nourriture existe encore
+					*	Si la quantité est strictement supérieure à 0, cela signifie quelle existe encore
+					*	sinon elle a été détruite et donc la liste contenant la nourriture a été modifié
+					*	On en prend compte pour le défilement de la nourriture
+					*/
+						i++;
+				}
+			else 
+				i++;
+			
+					
 			if (qtte <= 0)
 				break;
 		}
@@ -261,7 +279,7 @@ public abstract class Neuneu extends Comestible {
 		
 	}
 	
-	public Case nearestFood(boolean b){
+	public Case nearestFood(boolean isCannibal){
 		Monde m = Monde.getMonde();
 		double squareDistance = Double.MAX_VALUE;
 		Case nearestCase = null;
@@ -269,7 +287,7 @@ public abstract class Neuneu extends Comestible {
 		ArrayList<Comestible> com = new ArrayList<Comestible>();
 		
 		com.addAll(m.getCorneAbondance().getNourritureList());
-		if(b)
+		if(isCannibal)
 			com.addAll(m.getPopulation().getLofteurs());
 		
 		com.remove(this);

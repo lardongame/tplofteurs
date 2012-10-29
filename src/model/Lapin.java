@@ -39,7 +39,7 @@ public class Lapin extends Neuneu {
 	 */
 	public boolean peutManger(TypeNourriture p_type) {
 		return (
-				p_type == TypeNourriture.Boisson &&
+				p_type == TypeNourriture.Boisson ||
 				p_type == TypeNourriture.Legume
 				);
 	}

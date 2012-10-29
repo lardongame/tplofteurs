@@ -84,4 +84,9 @@ public class Nourriture extends Comestible {
     		return (TypeNourriture.Legume);
     	return (TypeNourriture.Boisson);
     }
+	public double getQuantite() {
+		return quantite;
+	}
+    
+    
 }

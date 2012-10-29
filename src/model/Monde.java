@@ -52,7 +52,7 @@ public class Monde {
 		this.loft = new Loft(width, height);
 		this.population = new Population(numberNeuneus, this.loft);
 		this.population.init(numberNeuneus, this.loft);
-		this.corneAbondance = new CorneAbondance(numberFood);
+		this.corneAbondance = new CorneAbondance();
 		this.corneAbondance.init(numberFood);
 	}
 
