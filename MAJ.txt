@@ -1,5 +1,20 @@
+﻿MAJ du 29/10/12 15h00 (Yohann)
+
+Vorace :
+ordonner case : revue du coefficient p, en l'initialisant à 1. Il y avait au mieux 0 sinon,
+ce qui explique pourquoi ils allaient n'importe où.
+
+Du coup vorace est opéarationnel.
+
+Il reste Cannibal et Lapin.
+Je crois que pour ces 2 derniers on ne leur dit pas qu'ils peuvent aller sur une case 
+avec un de leur congénére (pour l'engrosser ou pour le bouffer).
+
+---------------------------------------------------------------------------------------------
+
+
 MAJ du 39/10/12 11h30 (Yohann)
-(le 39/10? t'es sérieux?)
+(le 39/10? t'es sérieux?)yep
 
 Vorace, Cannibal, Lapin, Erratique :
 la m�thode peut manger, on faisait des conditions avec et plut�t que ou
