@@ -1,24 +1,25 @@
 MAJ du 39/10/12 11h30 (Yohann)
+(le 39/10? t'es sÃ©rieux?)
 
 Vorace, Cannibal, Lapin, Erratique :
-la méthode peut manger, on faisait des conditions avec et plutôt que ou
-Du coup, il fallait que la nourriture soit à la fois de la viande et des légumes...
+la mï¿½thode peut manger, on faisait des conditions avec et plutï¿½t que ou
+Du coup, il fallait que la nourriture soit ï¿½ la fois de la viande et des lï¿½gumes...
 ils ne mangeait pas beaucoup nos neuneus
 
 Neuneu :
-révision de la méthode manger par tour :
-- apparition d'un bug grâce à la révision de la méthode précédente (ils pouvaient manger),
-il y avait un appel concurrent de la liste. J'ai modifié la boucle for en une boucle while
-pour soler ce problème
-- ajout de l'énergie au neuneu après avoir manger
+rï¿½vision de la mï¿½thode manger par tour :
+- apparition d'un bug grï¿½ce ï¿½ la rï¿½vision de la mï¿½thode prï¿½cï¿½dente (ils pouvaient manger),
+il y avait un appel concurrent de la liste. J'ai modifiï¿½ la boucle for en une boucle while
+pour soler ce problï¿½me
+- ajout de l'ï¿½nergie au neuneu aprï¿½s avoir manger
 
 Corne Abondance :
 - petite modification au niveau de l'initialisation, les casts de double vers int
-étaient dans un mauvais sens. Du coup toute la nourriture était en quantité 0.
+ï¿½taient dans un mauvais sens. Du coup toute la nourriture ï¿½tait en quantitï¿½ 0.
 
 Population :
-J'ai revu la méthode tour pour être plus proche de du diagramme de classe
+J'ai revu la mï¿½thode tour pour ï¿½tre plus proche de du diagramme de classe
 
 
 Affichage:
-J'ai fait des réglages pour qu'on voit tout le loft
+J'ai fait des rï¿½glages pour qu'on voit tout le loft
