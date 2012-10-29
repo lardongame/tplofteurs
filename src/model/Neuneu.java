@@ -33,6 +33,8 @@ public abstract class Neuneu extends Comestible {
 	 */
 	private static double drainageParTour=1.0;
 	
+	private static double energieReproduction = 15.0;
+
 	/**
 	 * @brief	Renvoie l'énergie du neuneu.
 	 * @return	L'énergie du neuneu.
@@ -59,7 +61,7 @@ public abstract class Neuneu extends Comestible {
 	protected void deplacerTour() {
 		ArrayList<Case> voisins = Monde.getMonde().getLoft().getVoisins(this.getCaseActuelle());
 		Population pop = Monde.getMonde().getPopulation();
-		for (int i=voisins.size()-1;i>=0;i--) {
+		/*for (int i=voisins.size()-1;i>=0;i--) {
 			Case destination = voisins.get(i);
 			for (Neuneu occupe: pop.getLofteurs()) {
 				if (this != occupe && occupe.getCaseActuelle() == destination) {
@@ -67,19 +69,19 @@ public abstract class Neuneu extends Comestible {
 					break;
 				}
 			}
-		}
+		}*/
 		voisins = this.ordonnerCases(voisins);
 		if (voisins.size() > 0)
 			this.setCaseActuelle(voisins.get(0));
 	}
-	
+
 	/**
 	 * @brief		A partir des cases accessibles, la méthode détermine l'ordre de préférence pour le neuneu.
 	 * @param p_cases	Cases accessibles au neuneu.
 	 * @return		Cases dans l'ordre de préférence
 	 */
 	protected abstract ArrayList<Case> ordonnerCases(ArrayList<Case> p_cases);
-	
+
 	/**
 	 * @brief		Renvoie la quantité de manger assimilable en un tour
 	 * @return		La quantité de nourriture mangeable par tour.
@@ -92,57 +94,65 @@ public abstract class Neuneu extends Comestible {
 	protected void mangerTour() {
 		CorneAbondance corne = Monde.getMonde().getCorneAbondance();
 		double qtte = this.getNourritureParTour();
-		
+
 		int i = 0;
 		Nourriture manger;
 
 		while(i < corne.getNourritureList().size() ){
-			
+
 			manger = corne.getNourritureList().get(i);
-			
+
 			if (this.getCaseActuelle() == manger.getCaseActuelle()
-				&& this.peutManger(manger)	) {
-					double coeff = Nourriture.getCoeff(manger.getType());
-					double energie = manger.manger(this.energieMax-this.energie, qtte);
-					this.energie += energie;
-					qtte -= energie/coeff;
-					
-					if(manger.getQuantite() > 0.0) /*
-					*	On regarde si la nourriture existe encore
-					*	Si la quantité est strictement supérieure à 0, cela signifie quelle existe encore
-					*	sinon elle a été détruite et donc la liste contenant la nourriture a été modifié
-					*	On en prend compte pour le défilement de la nourriture
-					*/
-						i++;
-				}
+					&& this.peutManger(manger)	) {
+				double coeff = Nourriture.getCoeff(manger.getType());
+				double energie = manger.manger(this.energieMax-this.energie, qtte);
+				this.energie += energie;
+				qtte -= energie/coeff;
+
+				if(manger.getQuantite() > 0.0) /*
+				 *	On regarde si la nourriture existe encore
+				 *	Si la quantité est strictement supérieure à 0, cela signifie quelle existe encore
+				 *	sinon elle a été détruite et donc la liste contenant la nourriture a été modifié
+				 *	On en prend compte pour le défilement de la nourriture
+				 */
+					i++;
+			}
 			else 
 				i++;
-			
-					
+
+
 			if (qtte <= 0)
 				break;
 		}
 	}
-	
+
 	/**
 	 * @brief		Reproduction avec le ou les neuneus présents sur la case, qui peuvent alors repartir immédiatement.
 	 */
 	private void reproduireTour() {
-		 Population pop = Monde.getMonde().getPopulation();
-		 for (Neuneu autre: pop.getLofteurs()) {
-			 if (
-					 autre != this && 
-					 this.getCaseActuelle() == autre.getCaseActuelle() &&
-					 this.sexe != autre.sexe
-					 ) {
-				 if (this.enceinte == 0)
-					 this.enceinte = Neuneu.dureeEnceinte;
-				 if (autre.enceinte == 0)
-					 autre.enceinte = Neuneu.dureeEnceinte;
-			 }
-		 }
+		Population pop = Monde.getMonde().getPopulation();
+		for (Neuneu autre: pop.getLofteurs()) {
+			if (
+					autre != this && 
+					this.getCaseActuelle() == autre.getCaseActuelle() &&
+					this.sexe != autre.sexe &&
+					this.energie > Neuneu.energieReproduction &&
+					autre.getEnergie() > Neuneu.energieReproduction
+					) {
+				if (this.sexe != TypeSexe.Homme){
+					if(this.enceinte == 0)
+						this.enceinte = Neuneu.dureeEnceinte;
+				}
+				else{
+					if (autre.enceinte == 0)
+						autre.enceinte = Neuneu.dureeEnceinte;
+				}
+				this.energie -= Neuneu.energieReproduction;
+				autre.setEnergie(autre.getEnergie() - Neuneu.energieReproduction);
+			}
+		}
 	}
-	
+
 	/**
 	 * Appelé par le cycle de vie
 	 */
@@ -158,10 +168,10 @@ public abstract class Neuneu extends Comestible {
 			}
 		}
 		catch (Exception ex) {
-			
+
 		}
 	}
-	
+
 	/**
 	 * Renvoie true si on peut manger
 	 * @param p_nourriture	L'objet nourriture à tester
@@ -176,7 +186,7 @@ public abstract class Neuneu extends Comestible {
 	 * @return				true si on peut manger ce type
 	 */
 	protected abstract boolean peutManger(TypeNourriture p_nourriture);
-	
+
 	/**
 	 * Exclut le neuneu du loft (si son énergie est nulle par exemple)
 	 * Cette méthode n'est pas appelée directement par le cycle de vie.
@@ -184,7 +194,7 @@ public abstract class Neuneu extends Comestible {
 	private void exclure() {
 		Monde.getMonde().getPopulation().removeNeuneu(this);
 	}
-	
+
 	/**
 	 * Diminue l'énergie au cours d'un tour, la constante de diminution dépend de la race.
 	 */
@@ -202,7 +212,7 @@ public abstract class Neuneu extends Comestible {
 		}
 		this.energie -= p_perte;
 	}
-	
+
 	/**
 	 * Le neuneu devient de la viande froide
 	 */
@@ -215,7 +225,7 @@ public abstract class Neuneu extends Comestible {
 		Monde.getMonde().getCorneAbondance().add(viandefroide);
 		Monde.getMonde().getPopulation().removeNeuneu(this);
 	}
-	
+
 	/**
 	 * Construit un neuneu.
 	 * @param p_case		Case de départ.
@@ -228,7 +238,6 @@ public abstract class Neuneu extends Comestible {
 		this.energieMax = p_energmax;
 		this.energie = this.energieMax;
 		this.enceinte = 0;
-		Monde.getMonde().getPopulation().addNeuneu(this);
 	}
 	/**
 	 * Renvoie un sexe au pif
@@ -242,7 +251,7 @@ public abstract class Neuneu extends Comestible {
 			return (TypeSexe.Homme);
 		return (TypeSexe.Herma);
 	}
-	
+
 	/**
 	 * Ordonne les cases à partir des poids
 	 * @param	p_cases	Les cases
@@ -272,26 +281,35 @@ public abstract class Neuneu extends Comestible {
 	public TypeSexe getSexe() {
 		return (this.sexe);
 	}
-	
+
 	public Case nearestFood(){
-	
+
 		return this.nearestFood(false);
-		
+
 	}
-	
+
 	public Case nearestFood(boolean isCannibal){
 		Monde m = Monde.getMonde();
 		double squareDistance = Double.MAX_VALUE;
 		Case nearestCase = null;
-		
+
 		ArrayList<Comestible> com = new ArrayList<Comestible>();
-		
-		com.addAll(m.getCorneAbondance().getNourritureList());
-		if(isCannibal)
-			com.addAll(m.getPopulation().getLofteurs());
-		
-		com.remove(this);
-		
+
+		for(Nourriture n : m.getCorneAbondance().getNourritureList()){
+			if(this.peutManger(n))
+				com.add(n);
+		}
+
+		if(isCannibal){
+			for(Neuneu n2 : m.getPopulation().getLofteurs()){
+				if(n2 != this)
+					com.add(n2);
+			}
+		}
+		/*	com.addAll(m.getPopulation().getLofteurs());
+
+		com.remove(this);*/
+
 		for(Comestible n : com){
 			double localDistance = Math.pow(n.getCaseActuelle().getX() - this.getCaseActuelle().getX() , 2) 
 					+ Math.pow(n.getCaseActuelle().getY() - this.getCaseActuelle().getY() , 2);
@@ -299,9 +317,14 @@ public abstract class Neuneu extends Comestible {
 				squareDistance = localDistance;
 				nearestCase = m.getLoft().getCases()[n.getCaseActuelle().getX()][n.getCaseActuelle().getY()];
 			}
-				
+
 		}
-		
+
 		return nearestCase;
 	}
+	public void setEnergie(double energie) {
+		this.energie = energie;
+	}
+	
+	
 }

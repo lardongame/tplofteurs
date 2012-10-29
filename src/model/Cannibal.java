@@ -51,13 +51,13 @@ public class Cannibal extends Neuneu {
 	 */
 	protected ArrayList<Case> ordonnerCases(ArrayList<Case> p_cases) {
 		ArrayList<Double> poids = new ArrayList<Double>();
-		LinkedList<Neuneu> pop = Monde.getMonde().getPopulation().getLofteurs();
-		LinkedList<Nourriture> corne = Monde.getMonde().getCorneAbondance().getNourritureList();
+		/*LinkedList<Neuneu> pop = Monde.getMonde().getPopulation().getLofteurs();
+		LinkedList<Nourriture> corne = Monde.getMonde().getCorneAbondance().getNourritureList();*/
 		Case bouffeproche = this.nearestFood(true); 
 				
 		for (int i=0;i<p_cases.size();++i)
 		{
-			double p = 0;
+			double p = 1.0;
 			Case c = p_cases.get(i);
 			double ps = 
 					(bouffeproche.getX()-this.getCaseActuelle().getX())*
@@ -65,16 +65,16 @@ public class Cannibal extends Neuneu {
 					+
 					(bouffeproche.getY()-this.getCaseActuelle().getY())*
 					(c.getY()-this.getCaseActuelle().getY());
-					
-			for (Neuneu n: pop) {
+			//Utilité? Déjà pris en compte par nearestFood		
+			/*for (Neuneu n: pop) {
 				if (n != this && n.getCaseActuelle() == c)
 					p += 1.0;
 			}
 			for (Nourriture n: corne) {
 				if (n.getCaseActuelle() == c && this.peutManger(n.getType()))
 					p += 1.0;
-			}
-			poids.add(i, p*(1-ps));
+			}*/
+			poids.add(i, p*ps);
 		}
 		return (Neuneu.ordonner_poids(poids, p_cases));
 	}

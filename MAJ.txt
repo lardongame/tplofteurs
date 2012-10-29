@@ -1,4 +1,21 @@
-﻿MAJ du 29/10/12 15h00 (Yohann)
+﻿MAJ du 29/10/12 15h45 (Yohann)
+
+Neuneu :
+-Modification du constructeur : il ne s'ajoute plus lui même à la population. Cela était fait
+ à la fois dans le constructeur et dans l'initialisation du monde. Ils étaient donc référencés 2 fois.
+-Modification de reproduire : Seul un des 2 peut être enceinte! Un rapport ne donnent pas 2 personnes 
+enceintes je pense. De plus, le rapport est censé coûté de l'énergie. J'ai rajouté ce coût d'énergie.
+-déplacer tour : j'ai retiré la non sélection des cases où il y a un autre neuneu. Ce serait plutôt à
+ordonner cas de faire cela je pense. A revoir ce mécanisme malgré tout.
+
+
+Cannibal:
+
+-revue de ordonner case. Néabmoins, cette classe n'est toujours pas opérationnelle.
+
+---------------------------------------------------------------------------------------------
+
+MAJ du 29/10/12 15h00 (Yohann)
 
 Vorace :
 ordonner case : revue du coefficient p, en l'initialisant à 1. Il y avait au mieux 0 sinon,
