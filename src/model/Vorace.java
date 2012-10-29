@@ -37,8 +37,13 @@ public class Vorace extends Neuneu {
 
 		Case nearestFood = this.nearestFood();
 
-		int xVector = nearestFood.getX() - this.getCaseActuelle().getX();
-		int yVector = nearestFood.getY() - this.getCaseActuelle().getY();
+		int xVector = 0;
+		int yVector = 0; 
+
+		if(nearestFood != null){
+			xVector = nearestFood.getX() - this.getCaseActuelle().getX();
+			yVector = nearestFood.getY() - this.getCaseActuelle().getY();
+		}
 
 		int x2Vector;
 		int y2Vector;
@@ -49,12 +54,12 @@ public class Vorace extends Neuneu {
 			y2Vector = p_cases.get(i).getY() - this.getCaseActuelle().getY();
 
 
-			double p = 0;
+			double p = 1.0;
 			Case c = p_cases.get(i);
 
 			for (Neuneu n: pop) {
 				if (n != this && n.getCaseActuelle() == c)
-					p -= 1.0;
+					p -= 2.0;
 			}
 			if(x2Vector == 0 && y2Vector == 0){
 				if(xVector == 0 && yVector == 0)
