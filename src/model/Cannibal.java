@@ -16,14 +16,14 @@ public class Cannibal extends Neuneu {
 	 * La quantite de bouffe ingurgitable par tour
 	 */
 	static double nourritureParTour=10;
-	
+
 	/**
 	 * Construit un neuneu et le place sur une case au pif
 	 */
 	public Cannibal() {
 		super(Monde.getMonde().getLoft().randomCase(), Neuneu.randomSexe(), Cannibal.energieMaxMoy);
 	}
-	
+
 	/**
 	 * Renvoie la quantite de nourriture mangeable par tour
 	 * @return nourriture mangeable à chaque tour
@@ -54,7 +54,7 @@ public class Cannibal extends Neuneu {
 		/*LinkedList<Neuneu> pop = Monde.getMonde().getPopulation().getLofteurs();
 		LinkedList<Nourriture> corne = Monde.getMonde().getCorneAbondance().getNourritureList();*/
 		Case bouffeproche = this.nearestFood(true); 
-				
+
 		for (int i=0;i<p_cases.size();++i)
 		{
 			double p = 1.0;
@@ -78,7 +78,7 @@ public class Cannibal extends Neuneu {
 		}
 		return (Neuneu.ordonner_poids(poids, p_cases));
 	}
-	
+
 	/*/**
 	 * @brief	Effectue le déplacement du tour.
 	 * 		Récupère les cases accessibles, appel choixcase() et déplace si besoin.
@@ -95,4 +95,43 @@ public class Cannibal extends Neuneu {
 		if (voisins.size() > 0)
 			this.setCaseActuelle(voisins.get(0));
 	}*/
+
+	/**
+	 * @brief		Fait manger le neuneu par nourriture.manger(...)
+	 */
+	@Override
+	protected void mangerTour() {
+		Population pop = Monde.getMonde().getPopulation();
+		double qtte = this.getNourritureParTour();
+
+		int i = 0;
+		Neuneu manger;
+
+		while(i < pop.getLofteurs().size() ){
+
+			manger = pop.getLofteurs().get(i);
+
+			if(manger == this)
+				i++;
+			else{
+				if (this.getCaseActuelle() == manger.getCaseActuelle()	) {
+					
+					new Nourriture(this.getCaseActuelle(), TypeNourriture.NeuneuMort, manger.getEnergie());
+					
+					manger.mourir();
+					
+					System.out.println("Bouffé !!!!");
+
+					break;
+				}
+				else 
+					i++;
+			}
+			
+			if (qtte <= 0)
+				break;
+		}
+		
+		super.mangerTour();
+	}
 }

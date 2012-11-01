@@ -1,4 +1,11 @@
-﻿MAJ du 29/10/12 15h45 (Yohann)
+﻿MAJ du 01/11/12 12h45 (Yohann)
+
+Buff du Cannibal:
+Override de la méthode manger tour, lui permettant de bouffer ses congénères.
+
+------------------------------------------------------------------------------------------
+
+MAJ du 29/10/12 15h45 (Yohann)
 
 Neuneu :
 -Modification du constructeur : il ne s'ajoute plus lui même à la population. Cela était fait
