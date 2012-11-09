@@ -1,11 +1,11 @@
-﻿MAJ du 01/11/12 12h45 (Yohann)
+﻿MAJ du 01/11/12 12h45 
 
 Buff du Cannibal:
 Override de la méthode manger tour, lui permettant de bouffer ses congénères.
 
 ------------------------------------------------------------------------------------------
 
-MAJ du 29/10/12 15h45 (Yohann)
+MAJ du 29/10/12 15h45 
 
 Neuneu :
 -Modification du constructeur : il ne s'ajoute plus lui même à la population. Cela était fait
@@ -22,7 +22,7 @@ Cannibal:
 
 ---------------------------------------------------------------------------------------------
 
-MAJ du 29/10/12 15h00 (Yohann)
+MAJ du 29/10/12 15h00 
 
 Vorace :
 ordonner case : revue du coefficient p, en l'initialisant à 1. Il y avait au mieux 0 sinon,
@@ -37,8 +37,7 @@ avec un de leur congénére (pour l'engrosser ou pour le bouffer).
 ---------------------------------------------------------------------------------------------
 
 
-MAJ du 39/10/12 11h30 (Yohann)
-(le 39/10? t'es sérieux?)yep
+MAJ du 29/10/12 11h30 
 
 Vorace, Cannibal, Lapin, Erratique :
 la m�thode peut manger, on faisait des conditions avec et plut�t que ou
